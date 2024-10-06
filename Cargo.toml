@@ -1,0 +1,11 @@
+[package]
+name = "smugglrs"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+aes-gcm = "0.10.3"
+rand = {version = "0.8.5", features = ["getrandom"]}
+toml = "0.8.19"
+serde = {version = "1.0.210", features = ["derive"]}
+anyhow = "1.0.89"
