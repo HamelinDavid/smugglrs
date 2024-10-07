@@ -18,8 +18,8 @@ fn pipe_streams(mut src: TcpStream, mut dst: TcpStream) -> Result<()> {
     }
 }
 pub fn spawn_pipes(a: TcpStream, b: TcpStream) -> Result<()> {
-    a.set_nonblocking(false);
-    b.set_nonblocking(false);
+    a.set_nonblocking(false)?;
+    b.set_nonblocking(false)?;
     {
         let src = a.try_clone()?;
         let dst = b.try_clone()?;

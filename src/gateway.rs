@@ -17,8 +17,8 @@ enum EventType {
     NewTCPConnection(u16, TcpStream),
 }
 
-// Monitor the socket: if the connection is closed, we notify the main thread to transition 
-// back into "pairing" mode
+/// Monitor the socket: if the connection is closed, we notify the main thread to transition 
+/// back into "pairing" mode
 fn socket_monitor(mut socket: TcpStream, tx: Sender<EventType>) -> Result<()> {
     socket.set_read_timeout(None)?;
     let mut buf = [0u8; 1];
@@ -43,7 +43,7 @@ fn tcp_listener(port: u16, tx: Sender<EventType>) -> Result<()> {
                     eprintln!("Client connection on TCP port {port} failed. Reason:\n{err:?}\n");
                     eprintln!("Ignoring...");
                 }
-                Ok((socket,addr)) => {
+                Ok((socket,_addr)) => {
                     tx.send(EventType::NewTCPConnection(port, socket))?;
                 }
             }
@@ -117,7 +117,7 @@ fn gateway(ccfg: &CommonConfig, _gcfg: &GatewayConfig, listener: &TcpListener, m
         let mut ports = Vec::with_capacity(ports_length);
         let mut mapping = HashMap::with_capacity(ports_length);
         for i in 0..ports_length {
-            let port = Port::from_bytes(ports_raw[i..i+3].try_into().unwrap());
+            let port = Port::from_bytes(ports_raw[i*3..(i*3)+3].try_into().unwrap());
             ports.push(port);
             mapping.insert(port, i);
         }

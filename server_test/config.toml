@@ -1,4 +1,4 @@
 mode = "server"
 port = 14531
 gateway_address = "localhost"
-redirects = [[5333, 8000, "TCP"]]
+redirects = [[5333, 8000, "TCP"], [5334, 800, "TCP"]]
